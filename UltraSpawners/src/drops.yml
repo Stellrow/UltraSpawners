@@ -1,0 +1,18 @@
+#
+#    This config is for the tier based drops part of the spawners
+#    The following example should be enough for anyone to replicate
+#    The format will be started with the EntityType name (PIG,COW,SHEEP)
+#         - Names should be uppercased
+#         - Try keeping the tier in order to avoid any possible errors
+#    !!More advance options including in-game editor for custom items will be added soon!!
+#EntityType(PIG,COW,SHEEP)
+    #Tier number(Should always be a number and in increasing order!)
+      #Items that should be dropped(as a list,at the moment there is no chance system implemented,so all the items in that list will drop!)
+
+Drops:
+  PIG:
+      1:
+        - PORKCHOP
+      2:
+        - PORKCHOP
+        - COOKED_PORKCHOP

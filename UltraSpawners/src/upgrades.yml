@@ -1,0 +1,17 @@
+#This is the upgrade part of the spawners
+#Here you can setup how much money each tier will cost
+#And how many tiers can the spawner have!
+#   PLEASE KEEP THIS LINKED TO DROPS TIERS!(Dont place more tier on the upgrade config than on the drops one!)
+
+
+#Here is an example on how to set a new tier for a mob type!
+#Please try to keep the tiers in order(increasing from 1-2-3)
+
+
+#EntityType:
+  #Tier:money
+
+Upgrgrades:
+  PIG:
+    2: 5000
+    3: 10000

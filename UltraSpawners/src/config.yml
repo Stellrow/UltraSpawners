@@ -1,0 +1,33 @@
+GeneralConfig:
+  max-stack-size: 200
+  keep-stacking: true
+  kill-on-hit: true
+  chunk-spawner-stacking: true
+
+
+
+ItemConfig:
+  general-name-format: '&8%type &7| &aTier %tier'
+  lore:
+    - '&7A Ultra Spawner!'
+    - '&7Will spawn mobs'
+GuiConfig:
+  fill-empty-slots: true
+  filling-material: BLACK_STAINED_GLASS_PANE
+  filling-name: '&7-'
+  type:
+    material: SPAWNER
+    name: '&a%type &8| &7Spawner'
+    lore:
+      - '&7The type of mob it will spawn'
+  tier:
+    material: DIAMOND
+    name: '&a%tier &8| &7Tier'
+    lore:
+      - '&7This spawner tier level!'
+      - '&7Each tier level will make the mobs drop something else!'
+  stack:
+    material: CHEST
+    name: '&a%stack &8| &7Stack'
+    lore:
+      - '&7This many spawners are stacked inside this one'

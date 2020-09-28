@@ -1,0 +1,13 @@
+name: UltraSpawners
+author: Stellrow
+version: 1.0
+api-version: 1.13
+main: ro.Stellrow.UltraSpawners
+
+commands:
+  ultraspawners:
+    usage: /ultraspawners
+    description: Main command for Ultra Spawners
+    aliases:
+      - us
+      - ultraspawner
