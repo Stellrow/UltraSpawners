@@ -11,7 +11,7 @@
 #EntityType:
   #Tier:money
 
-Upgrgrades:
+Upgrades:
   PIG:
     2: 5000
     3: 10000

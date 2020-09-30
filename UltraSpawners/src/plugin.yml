@@ -3,6 +3,8 @@ author: Stellrow
 version: 1.0
 api-version: 1.13
 main: ro.Stellrow.UltraSpawners
+softdepend:
+  - Vault
 
 commands:
   ultraspawners:

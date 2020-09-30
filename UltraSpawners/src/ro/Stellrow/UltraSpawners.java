@@ -1,6 +1,8 @@
 package ro.Stellrow;
 
+import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.java.JavaPlugin;
 import ro.Stellrow.commands.UltraSpawnerCommandManager;
 import ro.Stellrow.guihandlers.GuiHandle;
@@ -43,6 +45,7 @@ public class UltraSpawners extends JavaPlugin {
 
     //Handlers
     private SpawnerStackingHandler spawnerStackingHandler;
+    private EconomyHandler economyHandler = new EconomyHandler(this);
 
     public PersistentSpawnerData persistentSpawnerData = new PersistentSpawnerData();
 
@@ -54,6 +57,7 @@ public class UltraSpawners extends JavaPlugin {
         eventsManager.init();
         commandManager.init();
         guiHandle.init();
+        economyHandler.init();
 
 
         messagesHandler = new MessagesHandler(messageConfig);

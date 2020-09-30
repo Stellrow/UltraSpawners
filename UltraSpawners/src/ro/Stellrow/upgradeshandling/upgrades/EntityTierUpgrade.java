@@ -16,5 +16,4 @@ public class EntityTierUpgrade {
         }
         return -1;
     }
-
 }

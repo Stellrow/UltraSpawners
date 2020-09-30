@@ -3,3 +3,5 @@ Messages:
   no-permission: "&cYou do not have permission to use this command!"
   spawner-already-opened: "&cSomebody is looking at this spawner already!"
   spawner-broken-while-watching: "&cSomebody destroyed the spawner you are looking at!"
+  not-enough-money: '&cYou dont have enough money to upgrade the spawner!'
+  successsfully-upgraded-spawner: '&aYou successfully upgraded the spawner!'

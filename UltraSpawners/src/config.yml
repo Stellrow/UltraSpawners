@@ -10,7 +10,7 @@ ItemConfig:
   general-name-format: '&8%type &7| &aTier %tier'
   lore:
     - '&7A Ultra Spawner!'
-    - '&7Will spawn mobs'
+    - '&7Will spawn special mobs with custom drops!'
 GuiConfig:
   fill-empty-slots: true
   filling-material: BLACK_STAINED_GLASS_PANE
@@ -31,3 +31,15 @@ GuiConfig:
     name: '&a%stack &8| &7Stack'
     lore:
       - '&7This many spawners are stacked inside this one'
+  upgrade:
+    material: EXPERIENCE_BOTTLE
+    name: '&aUpgrade'
+    lore:
+      - '&7This spawner can be upgraded to tier %nextTier'
+      - '&7You can buy the upgrade for &a$%upgradeCost'
+  maxUpgrade:
+    material: EXPERIENCE_BOTTLE
+    name: '&aMax Tier'
+    lore:
+      - '&7This spawner is at the highest tier'
+      - '&7You can not upgrade it anymore!'

@@ -13,6 +13,8 @@ public class MessagesHandler {
     public String no_permission;
     public String spawner_already_opened;
     public String spawner_broken_while_watching;
+    public String not_enough_money;
+    public String successsfully_upgraded_spawner;
 
 
     public void reload(){
@@ -28,5 +30,11 @@ public class MessagesHandler {
             spawner_broken_while_watching = prefix + Utils.asColor(messagesConfig.getConfig().getString("Messages.spawner-broken-while-watching",
                     "&cSomebody destroyed the spawner you are looking at!"
                     ));
+            not_enough_money = prefix+ Utils.asColor(messagesConfig.getConfig().getString("Messages.not-enough-money",
+                    "&cYou dont have enough money to upgrade the spawner!"
+            ));
+            successsfully_upgraded_spawner = prefix+ Utils.asColor(messagesConfig.getConfig().getString("Messages.successsfully-upgraded-spawner",
+                    "&aYou successfully upgraded the spawner!"
+            ));
     }
 }
