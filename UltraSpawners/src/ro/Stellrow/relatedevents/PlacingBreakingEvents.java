@@ -32,7 +32,7 @@ public class PlacingBreakingEvents implements Listener {
             spawner.setSpawnedType(spawnerData.getType());
             pdc.set(pl.ultraSpawnerKey,pl.persistentSpawnerData,spawnerData);
             spawner.update();
-            pl.getSpawnerStackingHandler().checkSameSpawnerInChunk(event.getBlockPlaced());
+            pl.getSpawnerStackingHandler().handleSpawnerStacking(event.getItemInHand(),event.getBlockPlaced());
         }
     }
 
