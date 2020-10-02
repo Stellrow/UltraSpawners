@@ -50,12 +50,14 @@ public class GuiHandle implements Listener {
         //Stack ItemStack
         stack = buildConfigItem("stack");
 
+        //Upgrade ItemStack
         upgrade = buildConfigItem("upgrade");
 
+        //MaxUpgrade ItemStack
         maxUpgrade = buildConfigItem("maxUpgrade");
 
 
-
+        //Filler used for the rest of the inventory
         Material fillerM;
             try{
                 fillerM = Material.valueOf(pl.getConfig().getString("GuiConfig.filling-material"));
@@ -71,6 +73,8 @@ public class GuiHandle implements Listener {
 
     }
 
+    //Open inventory method for creating a gui using the clicked spawner and the player involved
+    //This handle everything including creating and handling events related to the inventory
     public void openInventory(CreatureSpawner spawner, Player player){
         if(openedSpawners.containsValue(spawner)){
             //TODO config message for already opened spawner
