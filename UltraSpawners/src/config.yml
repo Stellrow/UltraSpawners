@@ -15,6 +15,9 @@ GuiConfig:
   fill-empty-slots: true
   filling-material: BLACK_STAINED_GLASS_PANE
   filling-name: '&7-'
+  hologramStatus:
+    enabled: 'enabled'
+    disabled: 'disabled'
   type:
     material: SPAWNER
     name: '&a%type &8| &7Spawner'
@@ -31,6 +34,11 @@ GuiConfig:
     name: '&a%stack &8| &7Stack'
     lore:
       - '&7This many spawners are stacked inside this one'
+  hologram:
+    material: ARMOR_STAND
+    name: '&a%hologramStatus &8| &7Hologram'
+    lore:
+      - '&7Click here to enable or disable the hologram!'
   upgrade:
     material: EXPERIENCE_BOTTLE
     name: '&aUpgrade'

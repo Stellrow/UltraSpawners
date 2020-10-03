@@ -1,11 +1,10 @@
 package ro.Stellrow;
 
-import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
-import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.java.JavaPlugin;
 import ro.Stellrow.commands.UltraSpawnerCommandManager;
 import ro.Stellrow.guihandlers.GuiHandle;
+import ro.Stellrow.holograms.HologramsManager;
 import ro.Stellrow.itemhandling.ItemHandler;
 import ro.Stellrow.relatedevents.UltraSpawnerEventsManager;
 import ro.Stellrow.upgradeshandling.TierDropManager;
@@ -42,6 +41,8 @@ public class UltraSpawners extends JavaPlugin {
     private TierDropManager tierDropManager = new TierDropManager(dropsConfig);
     //Upgrades Manager
     private TierUpgradeManager tierUpgradeManager = new TierUpgradeManager(upgradesConfig);
+    //Holograms Manager
+    private HologramsManager hologramsManager = new HologramsManager(this);
 
     //Handlers
     private SpawnerStackingHandler spawnerStackingHandler;
@@ -73,6 +74,10 @@ public class UltraSpawners extends JavaPlugin {
         spawnerStackingHandler=new SpawnerStackingHandler(this,getConfig().getBoolean("GeneralConfig.chunk-spawner-stacking",true));
     }
 
+    public void onDisable(){
+        hologramsManager.removeAll();
+    }
+
     private void loadConfig(){
         getConfig().options().copyDefaults(true);
         saveConfig();
@@ -93,5 +98,12 @@ public class UltraSpawners extends JavaPlugin {
 
     public SpawnerStackingHandler getSpawnerStackingHandler() {
         return spawnerStackingHandler;
+    }
+
+    public EconomyHandler getEconomyHandler() {
+        return economyHandler;
+    }
+    public HologramsManager getHologramsManager() {
+        return hologramsManager;
     }
 }

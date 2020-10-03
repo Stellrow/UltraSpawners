@@ -29,6 +29,7 @@ public class PlacingBreakingEvents implements Listener {
             CreatureSpawner spawner = (CreatureSpawner) event.getBlockPlaced().getState();
             PersistentDataContainer pdc = spawner.getPersistentDataContainer();
             SpawnerData spawnerData = itemPdc.get(pl.ultraSpawnerKey,pl.persistentSpawnerData);
+            spawnerData.setHasHologram(false);
             spawner.setSpawnedType(spawnerData.getType());
             pdc.set(pl.ultraSpawnerKey,pl.persistentSpawnerData,spawnerData);
             spawner.update();
@@ -44,6 +45,7 @@ public class PlacingBreakingEvents implements Listener {
         }
         CreatureSpawner creatureSpawner = (CreatureSpawner) event.getBlock().getState();
         if(creatureSpawner.getPersistentDataContainer().has(pl.ultraSpawnerKey,pl.persistentSpawnerData)){
+            pl.getHologramsManager().removeHologram(creatureSpawner);
             event.setDropItems(false);
             for(ItemStack spawner : pl.getItemHandler().getSpawner(creatureSpawner)){
                 event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(),spawner);

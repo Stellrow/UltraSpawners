@@ -39,10 +39,10 @@ public class SpawnerStackingHandler {
                     for(int z = 0;z<16;z++){
                         for(int y = 0;y<256;y++){
                             if(targetChunk.getBlockType(x,y,z)== Material.SPAWNER){
-                                if(spawnerBeingPlaced.getChunk().getBlock(x,y,z).equals(spawnerBeingPlaced)){
-                                    return;
-                                }
+                                if(!spawnerBeingPlaced.getChunk().getBlock(x,y,z).equals(spawnerBeingPlaced)){
                                     checkMerge(spawnerBeingPlaced.getChunk().getBlock(x, y, z), spawnerBeingPlaced);
+                                }
+
 
                             }
                         }
@@ -69,6 +69,7 @@ public class SpawnerStackingHandler {
                         placedSpawnerData.setStack(placedSpawnerData.getStack()+1);
                         cs.getPersistentDataContainer().set(pl.ultraSpawnerKey,pl.persistentSpawnerData,placedSpawnerData);
                         cs.update();
+                        pl.getHologramsManager().updateHologram(cs);
                         setToAir(beingPlaced);
                     }
 
@@ -103,6 +104,7 @@ public class SpawnerStackingHandler {
                                         toCheckData.setStack(toCheckData.getStack() + 1);
                                         cs.getPersistentDataContainer().set(pl.ultraSpawnerKey,pl.persistentSpawnerData,toCheckData);
                                         cs.update();
+                                        pl.getHologramsManager().updateHologram(cs);
                                         return true;
                                     }
                                     //if(shouldItSpawnHologram(newSet[4])) {

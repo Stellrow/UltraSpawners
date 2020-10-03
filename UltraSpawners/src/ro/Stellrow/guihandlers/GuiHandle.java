@@ -27,12 +27,14 @@ import java.util.List;
 public class GuiHandle implements Listener {
     private final UltraSpawners pl;
     private NamespacedKey priceKey;
+    private NamespacedKey hologramKey;
     public GuiHandle(UltraSpawners pl) {
         this.pl = pl;
          priceKey = new NamespacedKey(pl,"priceKey");
+         hologramKey = new NamespacedKey(pl,"hologramKey");
     }
 
-    private ItemStack type,tier,stack,filler,upgrade,maxUpgrade;
+    private ItemStack type,tier,stack,hologram,filler,upgrade,maxUpgrade;
 
     private HashMap<Inventory,CreatureSpawner> activeInventories = new HashMap<>();
     private HashMap<CreatureSpawner,GuiAccessor> openedSpawners = new HashMap<>();
@@ -55,6 +57,9 @@ public class GuiHandle implements Listener {
 
         //MaxUpgrade ItemStack
         maxUpgrade = buildConfigItem("maxUpgrade");
+
+        //Hologram ItemStack
+        hologram = buildConfigItem("hologram");
 
 
         //Filler used for the rest of the inventory
@@ -91,19 +96,24 @@ public class GuiHandle implements Listener {
         Inventory i = Bukkit.createInventory(null,27,"UltraSpawner");
         SpawnerData spawnerData = spawner.getPersistentDataContainer().get(pl.ultraSpawnerKey,pl.persistentSpawnerData);
         //11,13,15(Center slots for GUI)
-        i.setItem(11,changeValue(type,"%type",spawnerData.getType().toString()));
-        i.setItem(13,changeValue(tier,"%tier",spawnerData.getTier()+""));
-        i.setItem(15,changeValue(stack,"%stack",spawnerData.getStack()+""));
+        i.setItem(10,changeValue(type,"%type",spawnerData.getType().toString()));
+        i.setItem(12,changeValue(tier,"%tier",spawnerData.getTier()+""));
+        i.setItem(14,changeValue(stack,"%stack",spawnerData.getStack()+""));
+        i.setItem(16,changeValue(setHologramPDC(hologram),"%hologramStatus",returnHologramStatus(spawnerData.hasHologram())));
 
         if(pl.getTierUpgradeManager().getEntityUpgrade(spawnerData.getType()).getUpgradeCost(spawnerData.getTier()+1)>=0){
+            if(pl.getEconomyHandler().hasEco){
+
+
             int cost = pl.getTierUpgradeManager()
                     .getEntityUpgrade(spawnerData.getType())
                     .getUpgradeCost(spawnerData.getTier()+1)*spawnerData.getStack();
 
-           i.setItem(22,setPrice(changeLoreValue(changeLoreValue(upgrade,"%nextTier",spawnerData.getTier()+1+""),"%upgradeCost",
+           i.setItem(21,setPrice(changeLoreValue(changeLoreValue(upgrade,"%nextTier",spawnerData.getTier()+1+""),"%upgradeCost",
                     cost+""),cost));
+            }
         }else{
-            i.setItem(22,maxUpgrade);
+            i.setItem(21,maxUpgrade);
         }
 
         if(pl.getConfig().getBoolean("GuiConfig.fill-empty-slots")){
@@ -137,11 +147,29 @@ public class GuiHandle implements Listener {
                         whoClicked.closeInventory();
                     }
                 }
+                //Check if hologram item was clicked
+                if(event.getCurrentItem().getItemMeta().getPersistentDataContainer().has(hologramKey,PersistentDataType.STRING)){
+                    //Get spawner and spawnerdata
+                    CreatureSpawner spawner = activeInventories.get(event.getClickedInventory());
+                    SpawnerData spawnerData = spawner.getPersistentDataContainer().get(pl.ultraSpawnerKey,pl.persistentSpawnerData);
+                    //Check hologram status
+                    if(spawnerData.hasHologram()){
+                        //Remove hologram
+                        pl.getHologramsManager().removeHologram(spawner);
+                        //Change hologram status inside the spawnerData
+                        spawnerData.setHasHologram(false);
+                        //Set the new spawnerdata to the spawner
+                        changeHologramStatus(spawner,spawnerData);
+                        //Close inventory of who clicked
+                        event.getWhoClicked().closeInventory();
+                    }else {
+                        pl.getHologramsManager().addHologram(spawner, spawnerData);
+                        spawnerData.setHasHologram(true);
+                        changeHologramStatus(spawner,spawnerData);
+                        event.getWhoClicked().closeInventory();
+                    }
+                }
             }
-
-
-
-
             event.setCancelled(true);
         }
     }
@@ -225,6 +253,19 @@ public class GuiHandle implements Listener {
         toReturn.setItemMeta(im);
         return toReturn;
     }
+    private ItemStack setHologramPDC(ItemStack item){
+        ItemStack toReturn = item.clone();
+        ItemMeta im = item.getItemMeta();
+        im.getPersistentDataContainer().set(hologramKey,PersistentDataType.STRING,"hologramButton");
+        toReturn.setItemMeta(im);
+        return toReturn;
+    }
+    private String returnHologramStatus(boolean status){
+        if(status){
+            return Utils.asColor(pl.getConfig().getString("GuiConfig.hologramStatus.enabled"));
+        }
+        return Utils.asColor(pl.getConfig().getString("GuiConfig.hologramStatus.disabled"));
+    }
     private void forceRemove(Inventory involved){
         if(activeInventories.containsKey(involved)){
             openedSpawners.remove(activeInventories.get(involved));
@@ -238,6 +279,12 @@ public class GuiHandle implements Listener {
             return true;
         }
         return false;
+    }
+
+    //Spawner Utility
+    private void changeHologramStatus(CreatureSpawner spawner,SpawnerData spawnerData){
+        spawner.getPersistentDataContainer().set(pl.ultraSpawnerKey,pl.persistentSpawnerData,spawnerData);
+        spawner.update();
     }
 
 

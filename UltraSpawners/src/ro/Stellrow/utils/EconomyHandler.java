@@ -7,7 +7,7 @@ import ro.Stellrow.UltraSpawners;
 
 public class EconomyHandler {
     private final UltraSpawners pl;
-    private boolean hasEco;
+    public boolean hasEco;
     public static Economy economy = null;
 
 

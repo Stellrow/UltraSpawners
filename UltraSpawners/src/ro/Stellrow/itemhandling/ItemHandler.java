@@ -43,6 +43,7 @@ public class ItemHandler {
         ItemMeta im = i.getItemMeta();
         PersistentDataContainer spawnerPDC = creatureSpawner.getPersistentDataContainer();
         SpawnerData spawnerData = spawnerPDC.get(pl.ultraSpawnerKey,pl.persistentSpawnerData);
+        spawnerData.setHasHologram(false);
         EntityType type = spawnerData.getType();
         int stack = spawnerData.getStack();
         spawnerData.setStack(1);
