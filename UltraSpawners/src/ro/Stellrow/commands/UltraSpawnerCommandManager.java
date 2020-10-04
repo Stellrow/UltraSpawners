@@ -23,6 +23,10 @@ public class UltraSpawnerCommandManager implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String sa, String[] args) {
+        if(args.length==1&&args[0].equalsIgnoreCase("debug")){
+            sender.sendMessage(pl.getHologramsManager().getActiveHolograms().size()+" <Size");
+            return true;
+        }
         if(args.length==5&&args[0].equalsIgnoreCase("give")){
             if(sender.hasPermission("ultraspawners.give")){
 

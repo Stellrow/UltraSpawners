@@ -1,13 +1,20 @@
 package ro.Stellrow.holograms;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.world.ChunkUnloadEvent;
 import ro.Stellrow.UltraSpawners;
 import ro.Stellrow.utils.SpawnerData;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
-public class HologramsManager {
+public class HologramsManager implements Listener {
     private final UltraSpawners pl;
     private HashMap<CreatureSpawner,HologramHolder> activeHolograms = new HashMap<>();
 
@@ -48,11 +55,39 @@ public class HologramsManager {
         }
     }
 
+    public HashMap<CreatureSpawner, HologramHolder> getActiveHolograms() {
+        return activeHolograms;
+    }
+
     //Spawner Utility
     private void changeHologramStatus(CreatureSpawner spawner,SpawnerData spawnerData){
         spawner.getPersistentDataContainer().set(pl.ultraSpawnerKey,pl.persistentSpawnerData,spawnerData);
         spawner.update();
     }
+
+
+    //Unload holograms from inactive chunks
+    @EventHandler
+    public void onChunkUnload(ChunkUnloadEvent event){
+        List<BlockState> blockStates = Arrays.asList(event.getChunk().getTileEntities());
+        for(BlockState blockState : blockStates){
+            if(blockState.getType()== Material.SPAWNER){
+                CreatureSpawner creatureSpawner = (CreatureSpawner) blockState;
+                if(creatureSpawner.getPersistentDataContainer().has(pl.ultraSpawnerKey,pl.persistentSpawnerData)){
+                    SpawnerData spawnerData = creatureSpawner.getPersistentDataContainer().get(pl.ultraSpawnerKey,pl.persistentSpawnerData);
+                    if(spawnerData.hasHologram()){
+                        pl.getHologramsManager().removeHologram(creatureSpawner);
+                        spawnerData.setHasHologram(false);
+                        creatureSpawner.getPersistentDataContainer().set(pl.ultraSpawnerKey,pl.persistentSpawnerData,spawnerData);
+                        creatureSpawner.update();
+                    }
+                }
+            }
+        }
+
+    }
+
+
 
 
 }

@@ -32,6 +32,9 @@ public class SpawnerActivate implements Listener {
             if(one_hit){
                 ((LivingEntity)spawned).setHealth(1.0);
             }
+            if(spawnerData.hasHologram()){
+                pl.getHologramsManager().addHologram(spawner,spawnerData);
+            }
         }
     }
 }

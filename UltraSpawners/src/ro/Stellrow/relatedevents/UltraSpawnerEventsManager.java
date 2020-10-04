@@ -14,5 +14,6 @@ public class UltraSpawnerEventsManager {
     pl.getServer().getPluginManager().registerEvents(new UseSpawnerEvent(pl),pl);
     pl.getServer().getPluginManager().registerEvents(new SpawnerActivate(pl,pl.getConfig().getBoolean("GeneralConfig.kill-on-hit",true)),pl);
     pl.getServer().getPluginManager().registerEvents(new SpawnerEntityKill(pl),pl);
+    pl.getServer().getPluginManager().registerEvents(pl.getHologramsManager(),pl);
     }
 }

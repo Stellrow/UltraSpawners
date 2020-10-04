@@ -55,7 +55,7 @@ public class UltraSpawners extends JavaPlugin {
         loadConfig();
 
 
-        eventsManager.init();
+
         commandManager.init();
         guiHandle.init();
         economyHandler.init();
@@ -72,6 +72,7 @@ public class UltraSpawners extends JavaPlugin {
                 getConfig().getBoolean("GeneralConfig.keep-stacking",true)
                 ).startRunnable();
         spawnerStackingHandler=new SpawnerStackingHandler(this,getConfig().getBoolean("GeneralConfig.chunk-spawner-stacking",true));
+        eventsManager.init();
     }
 
     public void onDisable(){

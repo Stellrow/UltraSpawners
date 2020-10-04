@@ -2,12 +2,15 @@ package ro.Stellrow.utils;
 
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import ro.Stellrow.UltraSpawners;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.List;
 
 public class SpawnerStackingHandler {
     private final UltraSpawners pl;
@@ -31,39 +34,25 @@ public class SpawnerStackingHandler {
 
     
     private void checkSameSpawnerInChunk(Block spawnerBeingPlaced){
-        new BukkitRunnable(){
-            ChunkSnapshot targetChunk = spawnerBeingPlaced.getChunk().getChunkSnapshot();
-            @Override
-            public void run() {
-                for(int x = 0;x<16;x++){
-                    for(int z = 0;z<16;z++){
-                        for(int y = 0;y<256;y++){
-                            if(targetChunk.getBlockType(x,y,z)== Material.SPAWNER){
-                                if(!spawnerBeingPlaced.getChunk().getBlock(x,y,z).equals(spawnerBeingPlaced)){
-                                    checkMerge(spawnerBeingPlaced.getChunk().getBlock(x, y, z), spawnerBeingPlaced);
-                                }
-
-
-                            }
-                        }
+        List<BlockState> tiles = Arrays.asList(spawnerBeingPlaced.getChunk().getTileEntities());
+        for(BlockState state : tiles){
+            if(state.getType()==Material.SPAWNER){
+                CreatureSpawner spawner = (CreatureSpawner) state;
+                if(spawner.getPersistentDataContainer().has(pl.ultraSpawnerKey,pl.persistentSpawnerData)){
+                    if(checkMerge(spawner.getBlock(),spawnerBeingPlaced)){
+                        break;
                     }
-
                 }
-                this.cancel();
-
             }
-        }.runTaskAsynchronously(pl);
-    }
-    private void checkMerge(Block placedSpawner, Block beingPlaced){
-        new BukkitRunnable(){
-            @Override
-            public void run() {
+        }
+            }
+    private boolean checkMerge(Block placedSpawner, Block beingPlaced){
                 CreatureSpawner cs = (CreatureSpawner) placedSpawner.getState();
                 if (cs.getPersistentDataContainer().has(pl.ultraSpawnerKey,pl.persistentSpawnerData)) {
                     SpawnerData placedSpawnerData = cs.getPersistentDataContainer().get(pl.ultraSpawnerKey,pl.persistentSpawnerData);
                     SpawnerData beingPlacedData = ((CreatureSpawner)beingPlaced.getState()).getPersistentDataContainer().get(pl.ultraSpawnerKey,pl.persistentSpawnerData);
                     if(placedSpawnerData.getType()!=beingPlacedData.getType()){
-                        return;
+                        return false;
                     }
                     if(placedSpawnerData.getTier()==beingPlacedData.getTier()){
                         placedSpawnerData.setStack(placedSpawnerData.getStack()+1);
@@ -71,11 +60,10 @@ public class SpawnerStackingHandler {
                         cs.update();
                         pl.getHologramsManager().updateHologram(cs);
                         setToAir(beingPlaced);
+                        return true;
                     }
-
                 }
-            }
-        }.runTask(pl);
+                return false;
     }
     private void setToAir(Block b){
         Bukkit.getScheduler().runTaskLater(pl,()->{
