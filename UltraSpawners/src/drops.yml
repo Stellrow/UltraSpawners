@@ -16,3 +16,67 @@ Drops:
       2:
         - PORKCHOP
         - COOKED_PORKCHOP
+  SHEEP:
+      1:
+        - WHITE_WOOL
+      2:
+        - RED_BED
+  COW:
+      1:
+        - LEATHER
+        - BEEF
+      2:
+        - LEATHER
+        - COOKED_BEEF
+  CHICKEN:
+      1:
+        - FEATHER
+        - CHICKEN
+      2:
+        - FEATHER
+        - EGG
+        - COOKED_CHICKEN
+  ZOMBIE:
+      1:
+        - ROTTEN_FLESH
+      2:
+        - ROTTEN_FLESH
+        - CARROT
+  SKELETON:
+      1:
+        - BONE
+      2:
+        - BONE
+        - ARROW
+  SPIDER:
+    1:
+      - STRING
+    2:
+      - STRING
+      - SPIDER_EYE
+  CREEPER:
+    1:
+      - GUNPOWDER
+    2:
+      - TNT
+  ENDERMAN:
+    1:
+      - ENDER_PEARL
+    2:
+      - ENDER_EYE
+  CAVE_SPIDER:
+    1:
+      - STRING
+    2:
+      - STRING
+      - SPIDER_EYE
+  IRON_GOLEM:
+    1:
+      - IRON_ORE
+    2:
+      - IRON_INGOT
+  BLAZE:
+    1:
+      - BLAZE_POWDER
+    2:
+      - BLAZE_ROD

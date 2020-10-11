@@ -14,4 +14,25 @@
 Upgrades:
   PIG:
     2: 5000
-    3: 10000
+  SHEEP:
+    2: 5000
+  COW:
+    2: 10000
+  CHICKEN:
+    2: 5000
+  ZOMBIE:
+    2: 10000
+  SKELETON:
+    2: 10000
+  SPIDER:
+    2: 10000
+  CAVE_SPIDER:
+    2: 10000
+  CREEPER:
+    2: 50000
+  ENDERMAN:
+    2: 30000
+  IRON_GOLEM:
+    2: 75000
+  BLAZE:
+    2: 30000

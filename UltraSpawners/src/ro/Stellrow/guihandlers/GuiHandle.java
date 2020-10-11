@@ -130,7 +130,7 @@ public class GuiHandle implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent event){
-        if(activeInventories.containsKey(event.getClickedInventory())){
+        if(activeInventories.containsKey(event.getInventory())){
             if(event.getCurrentItem()!=null&&event.getCurrentItem().hasItemMeta()){
                 if(event.getCurrentItem().getItemMeta().getPersistentDataContainer().has(priceKey,PersistentDataType.INTEGER)){
                     Player whoClicked = (Player) event.getWhoClicked();
@@ -141,6 +141,7 @@ public class GuiHandle implements Listener {
                         activeInventories.get(event.getClickedInventory()).getPersistentDataContainer().set(pl.ultraSpawnerKey,pl.persistentSpawnerData,spawnerData);
                         activeInventories.get(event.getClickedInventory()).update();
                         whoClicked.sendMessage(pl.messagesHandler.successsfully_upgraded_spawner);
+                        pl.getHologramsManager().updateHologram(activeInventories.get(event.getClickedInventory()));
                         whoClicked.closeInventory();
                     }else{
                         whoClicked.sendMessage(pl.messagesHandler.not_enough_money);

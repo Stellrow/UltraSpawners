@@ -12,6 +12,9 @@ public class CustomConfig {
     private FileConfiguration fileConfiguration;
 
     public CustomConfig(String name, UltraSpawners main){
+        if(!main.getDataFolder().exists()){
+            main.getDataFolder().mkdirs();
+        }
             file = new File(main.getDataFolder(),name+".yml");
         if(!file.exists()){
             try {
