@@ -3,6 +3,7 @@ GeneralConfig:
   keep-stacking: true
   kill-on-hit: true
   chunk-spawner-stacking: true
+  max-spawner-stack: 50
 
 
 

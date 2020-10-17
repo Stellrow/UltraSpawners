@@ -55,12 +55,14 @@ public class SpawnerStackingHandler {
                         return false;
                     }
                     if(placedSpawnerData.getTier()==beingPlacedData.getTier()){
+                        if(placedSpawnerData.getStack()<pl.getConfig().getInt("GeneralConfig.max-spawner-stack")){
                         placedSpawnerData.setStack(placedSpawnerData.getStack()+1);
                         cs.getPersistentDataContainer().set(pl.ultraSpawnerKey,pl.persistentSpawnerData,placedSpawnerData);
                         cs.update();
                         pl.getHologramsManager().updateHologram(cs);
                         setToAir(beingPlaced);
                         return true;
+                        }
                     }
                 }
                 return false;
@@ -89,11 +91,13 @@ public class SpawnerStackingHandler {
                                 SpawnerData itemData = spawner.getItemMeta().getPersistentDataContainer().get(pl.ultraSpawnerKey,pl.persistentSpawnerData);
                                 if (toCheckData.getType()==itemData.getType()) {
                                     if(toCheckData.getTier()== itemData.getTier()) {
-                                        toCheckData.setStack(toCheckData.getStack() + 1);
-                                        cs.getPersistentDataContainer().set(pl.ultraSpawnerKey,pl.persistentSpawnerData,toCheckData);
-                                        cs.update();
-                                        pl.getHologramsManager().updateHologram(cs);
-                                        return true;
+                                        if(toCheckData.getStack()<pl.getConfig().getInt("GeneralConfig.max-spawner-stack")) {
+                                            toCheckData.setStack(toCheckData.getStack() + 1);
+                                            cs.getPersistentDataContainer().set(pl.ultraSpawnerKey, pl.persistentSpawnerData, toCheckData);
+                                            cs.update();
+                                            pl.getHologramsManager().updateHologram(cs);
+                                            return true;
+                                        }
                                     }
                                     //if(shouldItSpawnHologram(newSet[4])) {
                                     //    pl.hm.tryUpdateHologram(toCheck.getBlock(), newSet[1], Integer.parseInt(ChatColor.stripColor(newSet[2])), Integer.parseInt(ChatColor.stripColor(newSet[3])));
